@@ -1,6 +1,6 @@
 package com.example.aliez.tomorrowweather.db;
 
-import DataSupport;
+import org.litepal.crud.DataSupport;
 
 /**
  * Created by Aliez on 2017/3/27.
