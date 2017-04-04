@@ -3,7 +3,7 @@ package com.example.aliez.tomorrowweather.util;
 import android.text.TextUtils;
 
 import com.example.aliez.tomorrowweather.db.City;
-import com.example.aliez.tomorrowweather.db.Country;
+import com.example.aliez.tomorrowweather.db.County;
 import com.example.aliez.tomorrowweather.db.Province;
 
 import org.json.JSONArray;
@@ -45,7 +45,7 @@ public class Utility {
                     City city = new City();
                     city.setCityName(cityObject.getString("name"));
                     city.setCityCode(cityObject.getInt("id"));
-                    city.setProviceId(provinceId);
+                    city.setProvinceId(provinceId);
                     city.save();
                 }
                 return true;
@@ -57,17 +57,17 @@ public class Utility {
     }
 
     // 解析和处理服务器返回的县级数据
-    public static boolean handleCountryResponse(String response, int cityId) {
+    public static boolean handleCountyResponse(String response, int cityId) {
         if(!TextUtils.isEmpty(response)) {
             try {
                 JSONArray allCounties = new JSONArray(response);
                 for(int i = 0; i < allCounties.length(); i++) {
-                    JSONObject countryObject = allCounties.getJSONObject(i);
-                    Country country = new Country();
-                    country.setCountryName(countryObject.getString("name"));
-                    country.setWeatherId(countryObject.getString("weather_id"));
-                    country.setCityId(cityId);
-                    country.save();
+                    JSONObject countyObject = allCounties.getJSONObject(i);
+                    County county = new County();
+                    county.setCountyName(countyObject.getString("name"));
+                    county.setWeatherId(countyObject.getString("weather_id"));
+                    county.setCityId(cityId);
+                    county.save();
                 }
                 return true;
             }catch (JSONException e) {

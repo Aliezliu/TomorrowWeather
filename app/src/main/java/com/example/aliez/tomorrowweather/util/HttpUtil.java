@@ -1,5 +1,6 @@
 package com.example.aliez.tomorrowweather.util;
-
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 /**
  * Created by Aliez on 2017/3/27.
  */
