@@ -1,3 +1,42 @@
 <resources>
     <string name="app_name">明日天气</string>
+    <string name="city_Beijing">北京</string>
+    <string name="city_Shanghai">上海</string>
+    <string name="city_Guangzhou">广州</string>
+
+    <string name="city_Shenzhen">深圳</string>
+    <string name="city_Tianjin">天津</string>
+    <string name="city_Chongqin">重庆</string>
+
+    <string name="city_Chengdu">成都</string>
+    <string name="city_Wuhan">武汉</string>
+    <string name="city_Changsha">长沙</string>
+
+    <string name="city_Nanjing">南京</string>
+    <string name="city_Hangzhou">杭州</string>
+    <string name="city_Nanning">南宁</string>
+
+    <string name="city_Haerbin">哈尔滨</string>
+    <string name="city_Changchun">长春</string>
+    <string name="city_Shenyang">沈阳</string>
+
+    <string name="city_Zhengzhou">郑州</string>
+    <string name="city_Guiyang">贵阳</string>
+    <string name="city_Xian">西安</string>
+
+    <string name="city_Qingdao">青岛</string>
+    <string name="city_Kunming">昆明</string>
+    <string name="city_Taiyuan">太原</string>
+
+    <string name="city_Lanzhou">兰州</string>
+    <string name="city_Sanya">三亚</string>
+    <string name="city_Xiamen">厦门</string>
+
+    <string name="city_Hongkong">香港</string>
+    <string name="city_Macau">澳门</string>
+    <string name="city_Taibei">台北</string>
+
+    <string name="cancel">取消</string>
+    <string name="noLocationMatches">抱歉，没有匹配的城市地点信息</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

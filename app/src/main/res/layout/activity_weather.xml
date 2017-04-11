@@ -19,29 +19,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.example.aliez.tomorrowweather.ObservableScrollView
-        android:id="@+id/weather_layout"
+    <com.yalantis.phoenix.PullToRefreshView
+        android:id="@+id/pull_to_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:scrollbars="none"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <com.example.aliez.tomorrowweather.ObservableScrollView
+            android:id="@+id/weather_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:fitsSystemWindows="true">
 
-            <include layout="@layout/title"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <include layout="@layout/now"/>
+                <include layout="@layout/title"/>
 
-            <include layout="@layout/forecast"/>
+                <include layout="@layout/now"/>
 
-            <include layout="@layout/aqi"/>
+                <include layout="@layout/forecast"/>
 
-            <include layout="@layout/suggestion"/>
-        </LinearLayout>
-    </com.example.aliez.tomorrowweather.ObservableScrollView>
+                <include layout="@layout/aqi"/>
 
+                <include layout="@layout/suggestion"/>
+            </LinearLayout>
+        </com.example.aliez.tomorrowweather.ObservableScrollView>
+    </com.yalantis.phoenix.PullToRefreshView>
 </FrameLayout>

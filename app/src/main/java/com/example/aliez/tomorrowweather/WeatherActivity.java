@@ -1,15 +1,21 @@
 package com.example.aliez.tomorrowweather;
 
-import android.content.SharedPreferences;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,13 +25,13 @@ import com.example.aliez.tomorrowweather.gson.Weather;
 import com.example.aliez.tomorrowweather.util.HttpUtil;
 import com.example.aliez.tomorrowweather.util.Utility;
 import com.qiushui.blurredview.BlurredView;
+import com.yalantis.phoenix.PullToRefreshView;
 
 import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
 
 
 public class WeatherActivity extends AppCompatActivity implements ScrollViewListener {
@@ -41,11 +47,15 @@ public class WeatherActivity extends AppCompatActivity implements ScrollViewList
     private TextView sportText;
     //private ImageView bingPicImg;
     private Toolbar mToolBar;
-
+    public DrawerLayout drawerLayout;
+    //public SwipeRefreshLayout swipeRefresh;
+    public PullToRefreshView mPullToRefreshView;
     private BlurredView mBlurredView;
     private int mScrollerY;
 
+    private String mWeatherId;
     private int mAlpha;
+    private Button add_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,25 +83,89 @@ public class WeatherActivity extends AppCompatActivity implements ScrollViewList
         sportText = (TextView) findViewById(R.id.sport_text);
 
         mToolBar = (Toolbar) findViewById(R.id.main_toolbar);
+        add_button = (Button) findViewById(R.id.add_button);
         weatherLayout.setScrollViewListener(this);
+        mPullToRefreshView = (PullToRefreshView) findViewById(R.id.pull_to_refresh);
+//        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+//        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String weatherString = prefs.getString("weather", null);
-        if(weatherString != null) {
+        /*SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String weatherString = prefs.getString("weather", null);*/
+        /*if(weatherString != null) {
             Weather weather = Utility.handleWeatherResponse(weatherString);
+            mWeatherId = weather.basic.weatherId;
             showWeatherInfo(weather);
-        } else {
-            String weatherId = getIntent().getStringExtra("weather_id");
+        } else {*/
+        Intent intent = getIntent();
+        mWeatherId = intent.getStringExtra("weather_id");
+        if(!mWeatherId.equals(""))
+        {
+            Log.d("mWetherId", mWeatherId);
             weatherLayout.setVisibility(View.INVISIBLE);
-            requestWeather(weatherId);
+            requestWeather(mWeatherId);
         }
+        //}
+        /*swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestWeather(mWeatherId);
+            }
+        });*/
+        add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WeatherActivity.this, MainActivity.class));
+            }
+        });
+        mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestWeather(mWeatherId);
+                mPullToRefreshView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPullToRefreshView.setRefreshing(false);
+                    }
+                }, 300);
+            }
+        });
 //        String bingPic = prefs.getString("bing_pic", null);
 //        if(bingPic != null) {
 //            Glide.with(this).load(bingPic).into(bingPicImg);
 //        } else {
 //            loadBingPic();
 //        }
+
+
+        //written by wangxiaojie
+        /*Button addLocationButton = (Button)findViewById(R.id.add_button);
+        addLocationButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WeatherActivity.this,.);//还没有写
+                startActivityForResult(intent, 1);
+            }
+        });*/
     }
+
+    //written by wangxiaojie
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_CANCELED)
+        {
+            //用户没有在选择城市的activity中真正选择到城市，只是打开了以后没有选择成功就关掉了
+        }else
+        {
+            if(requestCode == 1)
+            {
+                //用户选择了有一个地点
+                int provinceCode = 0, cityCode = 0, countyCode = 0;
+                data.getIntExtra("provinceCode", provinceCode);
+                data.getIntExtra("cityCode", cityCode);
+                data.getIntExtra("county",countyCode);
+            }
+        }
+    }*/
 
     public void requestWeather(final String weatherId) {
         String weatherUrl = "http://guolin.tech/api/weather?cityid=" +
@@ -104,6 +178,7 @@ public class WeatherActivity extends AppCompatActivity implements ScrollViewList
                     @Override
                     public void run() {
                         Toast.makeText(WeatherActivity.this, "获取天气信息失败",Toast.LENGTH_SHORT).show();
+                        mPullToRefreshView.setRefreshing(false);
                     }
                 });
             }
@@ -116,18 +191,19 @@ public class WeatherActivity extends AppCompatActivity implements ScrollViewList
                     @Override
                     public void run() {
                         if (weather != null && "ok".equals(weather.status)) {
-                            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
+                            /*SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
                             editor.putString("weather", responseText);
-                            editor.apply();
+                            editor.apply();*/
                             showWeatherInfo(weather);
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
+                        mPullToRefreshView.setRefreshing(false);
                     }
                 });
             }
         });
-        loadBingPic();
+        //loadBingPic();
     }
 
     private void loadBingPic() {
@@ -190,6 +266,18 @@ public class WeatherActivity extends AppCompatActivity implements ScrollViewList
 
     @Override
     public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+        WindowManager wm = (WindowManager) WeatherActivity.this.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+// 获取到ImageView的高度
+        int height = point.y;
+        ViewGroup.LayoutParams params = mBlurredView.getLayoutParams();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+// 将ImageView的高度增加100
+        params.height = height + 100;
+// 应用更改设置
+        mBlurredView.requestLayout();
         mScrollerY += y - oldy;
         if (Math.abs(mScrollerY) > 1000) {
             mBlurredView.setBlurredTop(100);
