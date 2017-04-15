@@ -4,42 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@drawable/xx">
-        <Button
-            android:id="@+id/backward"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/close" >
-        </Button>
-        <LinearLayout
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
+            <Button
+                android:id="@+id/backward"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/close" >
+            </Button>
+            <TextView
+                android:layout_alignParentRight="true"
+                android:id="@+id/cancel"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:text="@string/cancel"
+                android:textColor="#FFFFFF">
+            </TextView>
             <SearchView
                 android:id="@+id/id_search_view"
-                android:layout_width="280dp"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_height="40dp"
-                android:layout_gravity="center"
                 android:background="@drawable/button_shape_yuanjiao"
                 android:iconifiedByDefault="false"
                 android:queryHint="搜索城市">
             </SearchView>
-
-            <TextView
-                android:gravity="center"
-                android:id="@+id/cancel"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:text="@string/cancel"
-                android:textColor="#0080FF">
-            </TextView>
-        </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
     <RelativeLayout
         android:layout_weight="2"
         android:layout_width="wrap_content"
@@ -70,29 +66,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TableRow style="@style/style_hot_city_row">
-                <Button android:id="@+id/id_beijing" android:text="@string/city_Beijing" style="@style/style_hot_city_button"/>
-                <Button android:id="@+id/id_shanghai" android:text="@string/city_Shanghai" style="@style/style_hot_city_button"/>
-                <Button android:id="@+id/id_guangzhou" android:text="@string/city_Guangzhou" style="@style/style_hot_city_button"/>
+                <Button android:id="@+id/id_beijing" android:text="@string/city_Beijing" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
+                <Button android:id="@+id/id_shanghai" android:text="@string/city_Shanghai" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
+                <Button android:id="@+id/id_guangzhou" android:text="@string/city_Guangzhou" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
             </TableRow>
             <TableRow style="@style/style_hot_city_row">
-                <Button android:id="@+id/id_shenzhen" android:text="@string/city_Shenzhen" style="@style/style_hot_city_button"/>
-                <Button android:id="@+id/id_tianjin" android:text="@string/city_Tianjin" style="@style/style_hot_city_button"/>
-                <Button android:id="@+id/id_chongqin" android:text="@string/city_Chongqin" style="@style/style_hot_city_button"/>
+                <Button android:id="@+id/id_shenzhen" android:text="@string/city_Shenzhen" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
+                <Button android:id="@+id/id_tianjin" android:text="@string/city_Tianjin" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
+                <Button android:id="@+id/id_chongqin" android:text="@string/city_Chongqin" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
             </TableRow>
             <TableRow style="@style/style_hot_city_row">
-                <Button android:id="@+id/id_chengdu" android:text="@string/city_Chengdu" style="@style/style_hot_city_button"/>
-                <Button android:id="@+id/id_wuhan" android:text="@string/city_Wuhan" style="@style/style_hot_city_button"/>
-                <Button android:id="@+id/id_changsha" android:text="@string/city_Changsha" style="@style/style_hot_city_button"/>
+                <Button android:id="@+id/id_chengdu" android:text="@string/city_Chengdu" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
+                <Button android:id="@+id/id_wuhan" android:text="@string/city_Wuhan" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
+                <Button android:id="@+id/id_changsha" android:text="@string/city_Changsha" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
             </TableRow>
             <TableRow style="@style/style_hot_city_row">
-                <Button android:id="@+id/id_nanjing" android:text="@string/city_Nanjing" style="@style/style_hot_city_button"/>
-                <Button android:id="@+id/id_hangzhou" android:text="@string/city_Hangzhou" style="@style/style_hot_city_button"/>
-                <Button android:id="@+id/id_xian" android:text="@string/city_Xian" style="@style/style_hot_city_button"/>
+                <Button android:id="@+id/id_nanjing" android:text="@string/city_Nanjing" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
+                <Button android:id="@+id/id_hangzhou" android:text="@string/city_Hangzhou" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
+                <Button android:id="@+id/id_xian" android:text="@string/city_Xian" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
             </TableRow>
             <TableRow style="@style/style_hot_city_row">
-                <Button android:id="@+id/id_hongkong" android:text="@string/city_Hongkong" style="@style/style_hot_city_button"/>
-                <Button android:id="@+id/id_macau" android:text="@string/city_Macau" style="@style/style_hot_city_button"/>
-                <Button android:id="@+id/id_taibei" android:text="@string/city_Taibei" style="@style/style_hot_city_button"/>
+                <Button android:id="@+id/id_hongkong" android:text="@string/city_Hongkong" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
+                <Button android:id="@+id/id_macau" android:text="@string/city_Macau" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
+                <Button android:id="@+id/id_taibei" android:text="@string/city_Taibei" style="@style/style_hot_city_button" android:background="@drawable/selector"/>
             </TableRow>
         </TableLayout>
     </RelativeLayout>

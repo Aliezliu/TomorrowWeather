@@ -22,7 +22,6 @@
             </intent-filter>
         </activity>
         <activity android:launchMode="singleTask" android:name=".WeatherActivity" />
-        <activity android:name=".SearchNoResultActivity"></activity>
     </application>
 
 </manifest>
