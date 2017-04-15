@@ -4,23 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="20dp"
         android:textColor="@color/colorBlack"
-        android:textSize="20dp"
         android:textAlignment="center"
         android:id="@+id/id_text_province"
+        android:textSize="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
     <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:textColor="@color/colorBlack"
-        android:textSize="20dp"
+        android:textSize="25dp"
         android:textAlignment="center"
         android:id="@+id/id_text_city"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
     <TextView
         android:textColor="@color/colorBlack"
-        android:textSize="20dp"
+        android:textSize="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:textAlignment="center"
         android:id="@+id/id_text_county"
         android:layout_width="wrap_content"

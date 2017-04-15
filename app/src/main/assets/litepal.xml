@@ -2,7 +2,7 @@
 <litepal>
     <dbname value="tomorrow_weather" />
 
-    <version value="6"/>
+    <version value="17"/>
 
     <list>
         <mapping class="com.example.aliez.tomorrowweather.db.Province"/>
