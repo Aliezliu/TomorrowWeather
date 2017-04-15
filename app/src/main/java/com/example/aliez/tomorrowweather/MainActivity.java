@@ -35,12 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private SearchView searchView;
     private TableLayout tableLayout;
     private Button backward;
-    public void actionStart(Context context)
-    {
-        Intent intent = new Intent(context, MainActivity.class);
-        startActivityForResult(intent,1);
-    }
-
     private void showProgressDailog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(MainActivity.this);
@@ -72,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 //Log.d("countyName",cn.getCountyName());
                 if (cn.getCountyName().equals(((Button)v).getText())) {
                     intent = new Intent(MainActivity.this, WeatherActivity.class);
+                    intent.putExtra("flag",2);
                     intent.putExtra("weather_id", cn.getWeatherId());
                     startActivity(intent);
                 }
@@ -82,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             intent = new Intent(MainActivity.this, WeatherActivity.class);
+            intent.putExtra("flag",1);
             intent.putExtra("weather_id","");
             startActivity(intent);
         }
@@ -131,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             SearchResult seR = searchresultArray.get(position);
                             intent = new Intent(MainActivity.this, WeatherActivity.class);
+                            intent.putExtra("flag",2);
                             intent.putExtra("weather_id", seR.getCounty().getWeatherId());
                             startActivity(intent);
                         }
@@ -232,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(MainActivity.this, "cannot get data from serve", Toast.LENGTH_SHORT).show();
                 //Log.d("get data from","fail");
                 intent = new Intent(MainActivity.this, WeatherActivity.class);
+                intent.putExtra("flag",0);
                 intent.putExtra("weather_id","");
                 startActivity(intent);
                 finish();
