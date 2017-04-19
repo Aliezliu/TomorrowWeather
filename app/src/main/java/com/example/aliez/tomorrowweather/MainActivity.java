@@ -269,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             List<County> cnlist = DataSupport.findAll(County.class);
             //Log.d("cnlist.size",String.valueOf(cnlist.size()));
+            /*
             for (County cn : cnlist) {
                 //Log.d("countyName",cn.getCountyName());
                 if (cn.getCountyName().equals(((Button)v).getText())) {
@@ -279,6 +280,13 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             }
+            */
+            intent = new Intent(MainActivity.this, WeatherActivity.class);
+            SearchResult hashResult = hashMap.get(((Button)v).getText());
+            intent.putExtra("flag", 2);
+            intent.putExtra("county",hashResult.getCounty().getCountyName());
+            intent.putExtra("weather_id", hashResult.getCounty().getWeatherId());
+            startActivity(intent);
         }
     };
 
