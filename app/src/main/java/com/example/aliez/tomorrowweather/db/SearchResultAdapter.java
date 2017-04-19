@@ -31,8 +31,8 @@ public class SearchResultAdapter extends ArrayAdapter<SearchResult> {
         TextView tvp = (TextView)view.findViewById(R.id.id_text_province);
         TextView tvc = (TextView)view.findViewById(R.id.id_text_city);
         TextView tvcn = (TextView)view.findViewById(R.id.id_text_county);
-        tvp.setText(src.getProvince().getProvinceName()+",");
-        tvc.setText(src.getCity().getCityName()+",");
+        tvp.setText("  " + src.getProvince().getProvinceName()+", ");
+        tvc.setText(src.getCity().getCityName()+", ");
         tvcn.setText(src.getCounty().getCountyName());
         return view;
     }

@@ -11,6 +11,7 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
         <!--android:scaleType="centerCrop"/>-->
+
     <com.qiushui.blurredview.BlurredView
         android:id="@+id/yahooweather_blurredview"
         app:src="@drawable/dayu"
@@ -19,34 +20,48 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.yalantis.phoenix.PullToRefreshView
-        android:id="@+id/pull_to_refresh"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.aliez.tomorrowweather.ObservableScrollView
-            android:id="@+id/weather_layout"
+        <com.yalantis.phoenix.PullToRefreshView
+            android:id="@+id/pull_to_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.example.aliez.tomorrowweather.ObservableScrollView
+                android:id="@+id/weather_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:fitsSystemWindows="true">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <include layout="@layout/title"/>
+
+                    <include layout="@layout/now"/>
+
+                    <include layout="@layout/forecast"/>
+
+                    <include layout="@layout/aqi"/>
+
+                    <include layout="@layout/suggestion"/>
+                </LinearLayout>
+            </com.example.aliez.tomorrowweather.ObservableScrollView>
+        </com.yalantis.phoenix.PullToRefreshView>
+
+        <fragment
+            android:id="@+id/county_fragment"
+            android:name="com.example.aliez.tomorrowweather.CountyListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:scrollbars="none"
-            android:fitsSystemWindows="true">
+            android:layout_gravity="start"/>
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <include layout="@layout/title"/>
-
-                <include layout="@layout/now"/>
-
-                <include layout="@layout/forecast"/>
-
-                <include layout="@layout/aqi"/>
-
-                <include layout="@layout/suggestion"/>
-            </LinearLayout>
-        </com.example.aliez.tomorrowweather.ObservableScrollView>
-    </com.yalantis.phoenix.PullToRefreshView>
+    </android.support.v4.widget.DrawerLayout>
 </FrameLayout>
