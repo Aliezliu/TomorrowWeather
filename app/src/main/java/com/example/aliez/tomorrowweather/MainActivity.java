@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener hotButtonListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            List<County> cnlist = DataSupport.findAll(County.class);
+            //List<County> cnlist = DataSupport.findAll(County.class);
             //Log.d("cnlist.size",String.valueOf(cnlist.size()));
             /*
             for (County cn : cnlist) {
