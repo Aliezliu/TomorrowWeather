@@ -76,7 +76,7 @@
                     android:drawableLeft="@drawable/location"
                     android:paddingLeft="7dp"
                     android:paddingRight="10dp"
-                    android:textColor="#1296db"
+                    android:textColor="@color/colorSkyBlue"
                     style="@style/style_hot_city_button"
                     android:background="@drawable/selector"/>
 

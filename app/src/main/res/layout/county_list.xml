@@ -4,8 +4,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/colorWhite"
     android:fitsSystemWindows="true">
+
+    <include layout="@layout/head_layout"/>
+
     <ListView
         android:id="@+id/county_listview"
         android:layout_width="match_parent"

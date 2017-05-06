@@ -21,10 +21,10 @@
 
     <Button
         android:id="@+id/county_button"
-        android:visibility="visible"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="260dp"
+        android:layout_marginLeft="80dp"
+
         android:background="@drawable/closebutton48"/>
 </LinearLayout>

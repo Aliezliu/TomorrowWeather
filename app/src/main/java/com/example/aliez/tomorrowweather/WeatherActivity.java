@@ -1,10 +1,8 @@
 package com.example.aliez.tomorrowweather;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,11 +10,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -36,6 +31,8 @@ import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
+import static com.example.aliez.tomorrowweather.CountyAdapter.flag;
 
 
 public class WeatherActivity extends AppCompatActivity implements ScrollViewListener {
@@ -95,6 +92,7 @@ public class WeatherActivity extends AppCompatActivity implements ScrollViewList
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(GravityCompat.START);
+                flag = false;
             }
         });
 
@@ -260,21 +258,9 @@ public class WeatherActivity extends AppCompatActivity implements ScrollViewList
 
     @Override
     public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
-        WindowManager wm = (WindowManager) WeatherActivity.this.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point point = new Point();
-        display.getSize(point);
-// 获取到ImageView的高度
-        int height = point.y;
-        ViewGroup.LayoutParams params = mBlurredView.getLayoutParams();
-        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-// 将ImageView的高度增加100
-        params.height = height + 100;
-
-// 应用更改设置
         mBlurredView.requestLayout();
         mScrollerY += y - oldy;
-        Log.d("mScrollerY", String.valueOf(mScrollerY));
+        //Log.d("mScrollerY", String.valueOf(mScrollerY));
         if (mScrollerY > 1000) {
             mBlurredView.setBlurredTop(100);
             mAlpha = 100;
@@ -287,4 +273,8 @@ public class WeatherActivity extends AppCompatActivity implements ScrollViewList
         }
         mBlurredView.setBlurredLevel(mAlpha);
     }
+
+
+
+
 }

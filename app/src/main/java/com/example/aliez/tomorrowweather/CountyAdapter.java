@@ -18,21 +18,38 @@ import java.util.List;
 
 public class CountyAdapter extends ArrayAdapter<String> {
     private int resourceId;
+    public static boolean flag = false;
 
     public CountyAdapter(Context context, int textViewResourceId, List<String> objects) {
         super(context, textViewResourceId, objects);
         resourceId = textViewResourceId;
+
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String item = getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
         TextView countyName = (TextView) view.findViewById(R.id.county_name);
-        Button button = (Button)view.findViewById(R.id.county_button);
-        button.setText("Button");
+        Button countyButton = (Button) view.findViewById(R.id.county_button);
+        countyButton.setTag(position);
+        countyButton.setVisibility(View.INVISIBLE);
+        if (flag) {
+            countyButton.setVisibility(View.VISIBLE);
+            countyButton.setFocusable(true);
+
+            countyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CountyListFragment.dataList.remove(position);
+                    CountyListFragment.adapter.notifyDataSetChanged();
+                }
+            });
+        }
         countyName.setText(item);
         return view;
     }
+
+
 }

@@ -63,21 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
     public LocationClient mLocationClient;
 
-    private void showProgressDailog() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(MainActivity.this);
-            progressDialog.setMessage("正在加载...");
-            progressDialog.setCanceledOnTouchOutside(false);
-        }
-        progressDialog.show();
-    }
-
-    private void closeProgressDialog() {
-        if(progressDialog != null) {
-            progressDialog.dismiss();
-        }
-    }
-
     class ThreadChild extends Thread
     {
         @Override
@@ -87,6 +72,64 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mLocationClient = new LocationClient(getApplicationContext());
+        mLocationClient.registerLocationListener(new MyLocationListener());
+        setContentView(R.layout.activity_main);
+        LocationButton = (Button) findViewById(R.id.id_location);
+
+        Thread thread = new ThreadChild();
+        thread.start();
+
+
+
+        showProgressDailog();
+
+
+        listView = (ListView)findViewById(R.id.id_search_result);
+        searchNoResult = (LinearLayout)findViewById(R.id.id_search_no_result);
+        tableLayout = (TableLayout)findViewById(R.id.bottom_part);
+        searchView = (SearchView)findViewById(R.id.id_search_view);
+        searchView.setOnQueryTextListener(searchViewRealListener);
+        backward = (Button)findViewById(R.id.backward);
+        cancel = (TextView)findViewById(R.id.cancel);
+
+        InitHotCityButtonList();
+
+        for(final Button b:hotCitybuttonlist) //热点城市点击事件
+            b.setOnClickListener(hotButtonListener);
+
+        backward.setOnClickListener(backwardListener);
+
+        cancel.setOnClickListener(cancelListener);
+
+        cancel.setVisibility(View.INVISIBLE);
+        //searchView.setOnClickListener(searchListener);
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        List<String> permissionList = new ArrayList<>();
+        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.READ_PHONE_STATE);
+        }
+        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if(!permissionList.isEmpty()) {
+            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
+            ActivityCompat.requestPermissions(MainActivity.this, permissions, 1);
+        } else {
+            requestLocation();
+        }
+    }
 
 
     private OnQueryTextListener searchViewRealListener = new OnQueryTextListener() {
@@ -158,71 +201,7 @@ public class MainActivity extends AppCompatActivity {
         hotCitybuttonlist.add((Button)findViewById(R.id.id_taibei));
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            View decorView = getWindow().getDecorView();
-//            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//            getWindow().setStatusBarColor(Color.TRANSPARENT);
-//        }
-
-        mLocationClient = new LocationClient(getApplicationContext());
-        mLocationClient.registerLocationListener(new MyLocationListener());
-        setContentView(R.layout.activity_main);
-        LocationButton = (Button) findViewById(R.id.id_location);
-
-        Thread thread = new ThreadChild();
-        thread.start();
-
-
-
-        showProgressDailog();
-
-
-        listView = (ListView)findViewById(R.id.id_search_result);
-        searchNoResult = (LinearLayout)findViewById(R.id.id_search_no_result);
-        tableLayout = (TableLayout)findViewById(R.id.bottom_part);
-        searchView = (SearchView)findViewById(R.id.id_search_view);
-        searchView.setOnQueryTextListener(searchViewRealListener);
-        backward = (Button)findViewById(R.id.backward);
-        cancel = (TextView)findViewById(R.id.cancel);
-
-        InitHotCityButtonList();
-
-        for(final Button b:hotCitybuttonlist) //热点城市点击事件
-            b.setOnClickListener(hotButtonListener);
-
-        backward.setOnClickListener(backwardListener);
-
-        cancel.setOnClickListener(cancelListener);
-
-        cancel.setVisibility(View.INVISIBLE);
-        //searchView.setOnClickListener(searchListener);
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        List<String> permissionList = new ArrayList<>();
-        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.READ_PHONE_STATE);
-        }
-        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if(!permissionList.isEmpty()) {
-            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
-            ActivityCompat.requestPermissions(MainActivity.this, permissions, 1);
-        } else {
-            requestLocation();
-        }
-    }
 
     private void requestLocation() {
         Log.d("mLocationClient Started", "requestLocation: ");
@@ -349,11 +328,11 @@ public class MainActivity extends AppCompatActivity {
     {
         String address = "http://guolin.tech/api/china";
         List<Province> lp = DataSupport.findAll(Province.class);
-        if(lp.size() == 0){
+        if (lp.size() == 0){
             queryFromServer(address,"province",null,null);
             lp = DataSupport.findAll((Province.class));
         }
-        //Log.d("lp.size",String.valueOf(lp.size()));
+        Log.d("lp.size",String.valueOf(lp.size()));
         for(Province p : lp) {
             List<City> lc = DataSupport.where("provinceId = ?", String.valueOf(p.getId())).find(City.class);
             if(lc.size() == 0) {
@@ -371,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
                     temp.setProvince(p);
                     temp.setCity(c);
                     temp.setCounty(county);
-                    hashMap.put(county.getCountyName(),temp);
+                    hashMap.put(county.getCountyName(), temp);
                 }
             }
         }
@@ -379,11 +358,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void queryFromServer(String address ,final String type, final Province p, final City c)
     {
+        showProgressDailog();
         HttpUtil.sendOkHttpRequest(address, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                if(progressDialog.isShowing()) {closeProgressDialog();}
-                e.printStackTrace();
+                if(progressDialog.isShowing())
+                    closeProgressDialog();
+                //e.printStackTrace();
                 //Toast.makeText(MainActivity.this, "cannot get data from serve", Toast.LENGTH_SHORT).show();
                 //Log.d("get data from","fail");
                 intent = new Intent(MainActivity.this, WeatherActivity.class);
@@ -396,15 +377,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseText = response.body().string();
-                boolean result = false;
-                if(type.equals("province")){
+                //boolean result = false;
+                if (type.equals("province")) {
                     Utility.handleProvinceResponse(responseText);
-                }else if(type.equals("city")) {
+                } else if (type.equals("city")) {
                     Utility.handleCityResponse(responseText, p.getId());
-                }else if(type.equals("county")) {
+                } else if (type.equals("county")) {
                     Utility.handleCountyResponse(responseText, c.getId());
                 }
             }
         });
+    }
+
+    private void showProgressDailog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setMessage("正在加载...");
+            progressDialog.setCanceledOnTouchOutside(false);
+        }
+        progressDialog.show();
+    }
+
+    private void closeProgressDialog() {
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 }
